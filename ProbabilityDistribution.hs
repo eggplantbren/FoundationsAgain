@@ -1,6 +1,5 @@
 -- Module name
-module ProbabilityDistribution
-       (makeFromList, makeUniform) where
+module ProbabilityDistribution where
 
 -- Imports
 import qualified Data.Vector.Unboxed as U

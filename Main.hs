@@ -12,7 +12,7 @@ main = do
   print p
 
 
-  -- A statement
-  let s = fromMaybe (error "Failure in S.makeFromList")
-                    (S.makeFromList [0])
-  print s
+  -- All statements that can be made from the atoms
+  let ss = S.allStatements p
+  print ss
+
