@@ -7,7 +7,7 @@ import qualified Data.Vector.Unboxed as U
 -- A type to represent a discrete probability distribution
 -- over N atoms.
 data ProbabilityDistribution = ProbabilityDistribution (U.Vector Double)
-  deriving (Eq, Show)
+  deriving (Eq, Read, Show)
 
 -- Normalise a list
 normaliseList :: [Double] -> [Double]

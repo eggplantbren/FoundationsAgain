@@ -10,7 +10,7 @@ import qualified ProbabilityDistribution as P
 
 -- Represent a statement by a set of integers
 data Statement = Statement (S.Set Int)
-    deriving (Eq, Show)
+    deriving (Eq, Read, Show)
 
 -- Make a statement from a list of ints
 makeFromList :: [Int] -> Maybe Statement

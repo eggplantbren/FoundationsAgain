@@ -11,7 +11,6 @@ main = do
                     (P.makeFromList [1.0, 2.0, 3.0])
   print p
 
-
   -- All statements that can be made from the atoms
   let ss = S.allStatements p
   print ss
