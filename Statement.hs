@@ -28,3 +28,13 @@ allStatements (P.ProbabilityDistribution ps) = let
   in
     fromMaybe (error "Error in allStatements.") ss'
 
+-- A new probability distribution that conditions on a statement
+given :: P.ProbabilityDistribution
+      -> Statement
+      -> Maybe P.ProbabilityDistribution
+given (P.ProbabilityDistribution ps) (Statement is) =
+  P.makeFromList newPs where
+    n      = U.length ps
+    newP i = if (S.member i is) then ps U.! i else 0.0 
+    newPs  = map newP [0..(n - 1)]
+
