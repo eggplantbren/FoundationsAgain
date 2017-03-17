@@ -1,5 +1,5 @@
 GHC = stack ghc
-GHCFLAGS = -- -O2 -Wall -fforce-recomp
+GHCFLAGS = -- -Wall -fforce-recomp
 
 default:
 	$(GHC) $(GHCFLAGS) Main.hs

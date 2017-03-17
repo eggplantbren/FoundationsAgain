@@ -1,5 +1,5 @@
 -- Imports
-import Data.Maybe
+import qualified Question as Q
 import qualified ProbabilityDistribution as P
 import qualified Statement as S
 
@@ -7,21 +7,15 @@ import qualified Statement as S
 main :: IO ()
 main = do
   -- A probability distribution
-  let p = fromMaybe (error "Failure in P.makeFromList")
-                    (P.makeFromList [1.0, 2.0, 3.0])
+  let p = P.fromList [1.0, 2.0, 3.0]
   print p
   putStrLn ""
 
-  -- All statements that can be made from the atoms
-  let ss = S.allStatements p
-  print ss
+  let ss = S.allStatements 3
+  let q = Q.downset (ss !! 3)
+  print (ss !! 3)
   putStrLn ""
-
-  -- Conditional probability distribution
-  let s  = ss !! 3
-      p' = p `S.given` s
-  print p'
-  putStrLn ""
+  print q
 
   return ()
 

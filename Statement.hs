@@ -1,40 +1,44 @@
 -- Name of module
 module Statement where
 
--- Imports
 import Data.List (subsequences)
-import Data.Maybe
-import qualified Data.Set as S
-import qualified Data.Vector.Unboxed as U
-import qualified ProbabilityDistribution as P
 
--- Represent a statement by a set of integers
-data Statement = Statement (S.Set Int)
+-- Represent a statement by a list of bools
+newtype Statement = Statement [Bool]
     deriving (Eq, Read, Show)
 
--- Make a statement from a list of ints
-makeFromList :: [Int] -> Maybe Statement
-makeFromList is
-  | any (< 0) is = Nothing
-  | otherwise    = Just (Statement is') where is' = S.fromList is
-
--- All statements from the atoms of a particular
--- probability distribution
-allStatements :: P.ProbabilityDistribution -> [Statement]
-allStatements (P.ProbabilityDistribution ps) = let
-    n   = U.length ps
+-- All statements from n atoms
+allStatements :: Int -> [Statement]
+allStatements n = ss' where
+    toStatement s = Statement [i `elem` s | i <- [0..(n-1)]]
     ss  = subsequences [0..(n-1)]
-    ss' = mapM makeFromList ss
-  in
-    fromMaybe (error "Error in allStatements.") ss'
+    ss' = map toStatement ss
 
--- A new probability distribution that conditions on a statement
-given :: P.ProbabilityDistribution
-      -> Statement
-      -> Maybe P.ProbabilityDistribution
-given (P.ProbabilityDistribution ps) (Statement is) =
-  P.makeFromList newPs where
-    n      = U.length ps
-    newP i = if (S.member i is) then ps U.! i else 0.0 
-    newPs  = map newP [0..(n - 1)]
+-- Logical or
+logicalOr :: Statement -> Statement -> Statement
+logicalOr (Statement x) (Statement y) = Statement (zipWith (||) x y)
+
+-- Logical and
+logicalAnd :: Statement -> Statement -> Statement
+logicalAnd (Statement x) (Statement y) = Statement (zipWith (&&) x y)
+
+-- Implies
+implies :: Statement -> Statement -> Bool
+implies (Statement x) (Statement y) = all (== True) z where
+    z     = zipWith f x y
+    f a b = if a then b else True
+
+-- Is implied by
+isImpliedBy :: Statement -> Statement -> Bool
+isImpliedBy x y = implies y x
+
+---- A new probability distribution that conditions on a statement
+--given :: P.ProbabilityDistribution
+--      -> Statement
+--      -> Maybe P.ProbabilityDistribution
+--given (P.ProbabilityDistribution ps) (Statement is) =
+--  P.makeFromList newPs where
+--    n      = U.length ps
+--    newP i = if (S.member i is) then ps U.! i else 0.0 
+--    newPs  = map newP [0..(n - 1)]
 
