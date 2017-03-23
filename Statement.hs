@@ -1,4 +1,5 @@
-module Statement where
+-- Don't export everything
+module Statement (and, fromString, or, Statement) where
 
 -- Imports
 import Data.Maybe
@@ -29,12 +30,19 @@ fromString s =
   in
     fmap Statement bools
 
+-- Number of atoms (i.e., length)
+numAtoms :: Statement -> Int
+numAtoms (Statement bs) = U.length bs
+
 -- Logical or
-or :: Statement -> Statement -> Statement
-or (Statement x) (Statement y) = Statement z where
-  z = U.zipWith (||) x y
+or :: Statement -> Statement -> Maybe Statement
+or sx@(Statement x) sy@(Statement y)
+  | numAtoms sx /= numAtoms sy = Nothing
+  | otherwise = Just (Statement z) where z = U.zipWith (||) x y
 
 -- Logical and
 and :: Statement -> Statement -> Statement
 and (Statement x) (Statement y) = Statement z where
   z = U.zipWith (&&) x y
+
+
