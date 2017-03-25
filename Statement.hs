@@ -41,8 +41,8 @@ or sx@(Statement x) sy@(Statement y)
   | otherwise = Just (Statement z) where z = U.zipWith (||) x y
 
 -- Logical and
-and :: Statement -> Statement -> Statement
-and (Statement x) (Statement y) = Statement z where
-  z = U.zipWith (&&) x y
-
+and :: Statement -> Statement -> Maybe Statement
+and sx@(Statement x) sy@(Statement y)
+  | numAtoms sx /= numAtoms sy = Nothing
+  | otherwise = Just (Statement z) where z = U.zipWith (&&) x y
 

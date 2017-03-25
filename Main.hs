@@ -1,4 +1,5 @@
 -- Imports
+import Control.Monad
 import Prelude hiding (and, or)
 import Statement
 
@@ -13,10 +14,8 @@ main = do
 
   -- Logical or
   let result = do
-        s1' <- s1
-        s2' <- s2
-        s1' `or` s2'
-
+                 temp <- liftM2 or s1 s2
+                 temp
   print result
 
   return ()
