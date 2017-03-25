@@ -1,7 +1,12 @@
 -- Don't export everything
-module Statement (and, fromString, or, Statement) where
+module Statement (allStatements,
+                  and,
+                  fromString,
+                  or,
+                  Statement) where
 
 -- Imports
+import Data.List (subsequences)
 import Data.Maybe
 import qualified Data.Vector.Unboxed as U
 import Prelude hiding (and, or)
@@ -33,6 +38,17 @@ fromString s =
 -- Number of atoms (i.e., length)
 numAtoms :: Statement -> Int
 numAtoms (Statement bs) = U.length bs
+
+-- All statements when there are n atoms
+allStatements :: Int -> [Statement]
+allStatements n = let
+    numbers       = [0..(n-1)] :: [Int]
+    subsets       = subsequences numbers
+    toVec subset  = U.map
+                    (\i -> if i `elem` subset then True else False)
+                    (U.fromList numbers)
+  in
+    map (Statement . toVec) subsets
 
 -- Logical or
 or :: Statement -> Statement -> Maybe Statement

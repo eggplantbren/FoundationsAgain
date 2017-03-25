@@ -18,5 +18,8 @@ main = do
                  temp
   print result
 
+  putStrLn ""
+  print $ allStatements 4
+
   return ()
 
