@@ -47,27 +47,27 @@ allStatements hypothesisSpace@(HypothesisSpace _ numAtoms) =
 
 -- Define logical and
 and :: Statement -> Statement -> Statement
-and (Statement hs1 ias1) (Statement hs2 ias2)
-  | hs1 /= hs2 = error "Not in same space."
-  | otherwise  = Statement hs ias where
-                   hs  = hs1
+and (Statement h1 ias1) (Statement h2 ias2)
+  | h1 /= h2   = error "Not in same space."
+  | otherwise  = Statement h ias where
+                   h   = h1
                    ias = S.intersection ias1 ias2
 
 -- Define logical or
 or :: Statement -> Statement -> Statement
-or (Statement hs1 ias1) (Statement hs2 ias2)
-  | hs1 /= hs2 = error "Not in same space."
-  | otherwise  = Statement hs ias where
-                   hs  = hs1
-                   ias = S.union ias1 ias2
+or (Statement h1 ias1) (Statement h2 ias2)
+  | h1 /= h2  = error "Not in same space."
+  | otherwise = Statement h ias where
+                  h   = h1
+                  ias = S.union ias1 ias2
 
 -- A demo that can be executed
 demo :: IO ()
 demo = do
 
   -- Create a whole Boolean lattice of statements!
-  let hs = HypothesisSpace "x" 3
-  let ss = allStatements hs
+  let h  = HypothesisSpace "x" 3
+  let ss = allStatements h
 
   let x = ss V.! 3
   let y = ss V.! 4
