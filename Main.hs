@@ -1,7 +1,7 @@
 -- Imports
-import Statement
+import qualified Measure
 
 -- Main action
 main :: IO ()
-main = Statement.demo
+main = Measure.demo
 

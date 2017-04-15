@@ -1,5 +1,3 @@
-{-# LANGUAGE RecordWildCards #-}
-
 module Statement where
 
 -- Imports
