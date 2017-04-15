@@ -14,6 +14,16 @@ data HypothesisSpace = HypothesisSpace
                            hypothesisSpaceNumAtoms :: Int
                        } deriving (Eq, Read, Show)
 
+
+-- Hypothesis space product
+product :: HypothesisSpace -> HypothesisSpace -> HypothesisSpace
+product (HypothesisSpace id1 na1) (HypothesisSpace id2 na2) =
+  let
+    newId = id1 ++ id2
+    na    = na1*na2
+  in
+    HypothesisSpace newId na
+
 -- A type for statements. They are defined by
 -- the hypothesis space they are 'in',
 -- and which atoms are included.
