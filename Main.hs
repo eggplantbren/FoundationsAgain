@@ -1,9 +1,7 @@
 -- Imports
+import Statement
 
 -- Main action
 main :: IO ()
-main = do
-  putStrLn "Hello."
-
-  return ()
+main = Statement.demo
 
